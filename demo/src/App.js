@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Button} from 'antd-mobile';
+import {connect} from 'react-redux';
+import {addGUN,removeGUN,removeGUNAsync} from'./index.redux';
 
 class App extends Component {
   render() {
-    const store = this.props.store
-    const num = store.getState()
+    const num = this.props.num
     const addGUN = this.props.addGUN
     const removeGUN = this.props.removeGUN
     const removeGUNAsync = this.props.removeGUNAsync
@@ -21,12 +22,18 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <p>现在有{num}挺歪把子</p>  
-        <Button type="primary" onClick = {()=>store.dispatch(addGUN())}>来挺歪把子</Button>
-        <Button type="primary" onClick = {()=>store.dispatch(removeGUN())}>上交挺歪把子</Button>
-        <Button type="primary" onClick = {()=>store.dispatch(removeGUNAsync())}>托两秒在给挺歪把子</Button>
+        <Button type="primary" onClick = {addGUN}>来挺歪把子</Button>
+        <Button type="primary" onClick = {removeGUN}>上交挺歪把子</Button>
+        <Button type="primary" onClick = {removeGUNAsync}>托两秒在给挺歪把子</Button>
       </div>
     );
   }
 }
-
+//把状态塞到属性（num）里面
+const mapStatetoProps = (state)=>{
+  return {num:state}
+}
+//影响状态改变的事件
+const actionCreators = {addGUN,removeGUN,removeGUNAsync}
+App = connect(mapStatetoProps,actionCreators)(App)
 export default App;
