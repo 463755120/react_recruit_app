@@ -4,7 +4,12 @@ import './App.css';
 import {Button} from 'antd-mobile';
 import {connect} from 'react-redux';
 import {addGUN,removeGUN,removeGUNAsync} from'./index.redux';
-
+//装饰器
+@connect(
+  //你要什么属性放到props里面
+  state=>({num:state.counter})
+   //你要什么方法放到props里面，会自动dispatch
+  ,{addGUN,removeGUN,removeGUNAsync})
 class App extends Component {
   render() {
     const num = this.props.num
@@ -29,11 +34,11 @@ class App extends Component {
     );
   }
 }
-//把状态塞到属性（num）里面
-const mapStatetoProps = (state)=>{
-  return {num:state}
-}
-//影响状态改变的事件
-const actionCreators = {addGUN,removeGUN,removeGUNAsync}
-App = connect(mapStatetoProps,actionCreators)(App)
+// //把状态塞到属性（num）里面
+// const mapStatetoProps = (state)=>{
+//   return {num:state}
+// }
+// //影响状态改变的事件
+// const actionCreators = {addGUN,removeGUN,removeGUNAsync}
+// App = connect(mapStatetoProps,actionCreators)(App)
 export default App;

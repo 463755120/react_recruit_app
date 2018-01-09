@@ -1,7 +1,7 @@
 const ADD_GUN = "加歪把子"
 const REMOVE_GUN = "减歪把子"
 
-export function counter(state = 0, action) {
+export  function counter(state = 0, action) {
     switch (action.type) {
       case ADD_GUN:
         return state + 1;
