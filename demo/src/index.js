@@ -1,32 +1,30 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import { createStore,applyMiddleware,compose } from "redux";
-import thunk from 'redux-thunk';
-import {Provider} from 'react-redux';
-import reducer from'./reducer';
-import {BrowserRouter,Route,Link,Redirect,Switch} from 'react-router-dom';
-import Auth from'./Auth';
-import Dashboard from './Dashboard';
-import { auth } from './Auth.redux';
-import { counter } from'./index.redux';
+import React from 'react'
+import ReactDom from 'react-dom'
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
+import { BrowserRouter, Route, Redirect, Switch, Router } from 'react-router-dom';
 
-const reduxDevtools = window.devToolsExtension ? window.devToolsExtension():()=>{}
-const store = createStore(reducer,compose(
-    applyMiddleware(thunk),reduxDevtools
+import Login from './container/login/login'
+import Register from './container/register/register'
+import reducers from './reducer'
+import './config'
+
+const store = createStore(reducers, compose(
+	applyMiddleware(thunk),
+	window.devToolsExtension?window.devToolsExtension():f=>f
 ))
-ReactDOM.render(
-    (<Provider store={store}>
-        <BrowserRouter>
-            <Switch>             
-                <Route path="/login" component={Auth}></Route>
-                <Route path="/dashboard" component={Dashboard}></Route>
-                {/* 刷新跳转到指定页面 */}
-                <Redirect to="/dashboard"></Redirect>
-            </Switch>
-        </BrowserRouter>     
-    </Provider>),
-    document.getElementById("root")
-    
+function Boss(){
+	return <h2>BOSS页面</h2>
+}
+ReactDom.render(
+	(<Provider store={store}>
+		<BrowserRouter>
+			<div>
+                <Route path="/login" component={Login}></Route>  
+                <Route path="/register" component={Register}></Route>  
+			</div>
+		</BrowserRouter>
+	</Provider>),
+	document.getElementById('root')
 )
