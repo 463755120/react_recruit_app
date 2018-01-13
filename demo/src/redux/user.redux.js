@@ -27,11 +27,16 @@ export function user(state=initState, action){
 		default:
 			return state
 	}
-}  
+} 
+function loginSuccess(data){
+    return {type:LOGIN_SUCESS,payload:data}
+} 
 function registerSuccess(data){
     return {type:REGISTER_SUCCESS,payload:data}
 }
-
+export function loadData(userinfo){
+    return {type:LOAD_DATA,payload:userinfo}
+}
 function errorMas(msg){
     return {msg,type:ERROR_MSG}
 }
@@ -48,6 +53,21 @@ export function regisger({user,pwd,repeatpwd,type}){
              .then(res=>{
                  if(res.status === 200 && res.data.code ===0){
                     dispatch(registerSuccess(({user,pwd,type}))) 
+                 }else {
+                     dispatch(errorMas(res.data.msg))
+                 }
+             })
+    }
+}
+export function login({user,pwd}){
+    if(!user||!pwd ){
+        return errorMas("用户名密码必须输入")
+    }
+    return dispatch=>{
+        axios.post('/user/login',{user,pwd})
+             .then(res=>{
+                 if(res.status === 200 && res.data.code ===0){
+                    dispatch(loginSuccess(({user,pwd}))) 
                  }else {
                      dispatch(errorMas(res.data.msg))
                  }
