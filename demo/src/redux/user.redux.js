@@ -45,7 +45,6 @@ export function regisger({user,pwd,repeatpwd,type}){
         return errorMas("用户名密码必须输入")
     }
     if(pwd !== repeatpwd ){
-        console.log(pwd,repeatpwd)
         return errorMas("密码和确认密码不同")
     }
     return dispatch=>{
