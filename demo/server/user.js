@@ -7,7 +7,7 @@ const _filter = {'pwd':0,'__v':0}
 const User = model.getModel('user')
 Router.get('/list',function(req,res){
     const {type} = req.query 
-    console.log(req.query,req.bpdy)
+    console.log(req.query,req.body)
     User.find({type},function(err,doc){
         return res.json({code:0,data:doc})
     })
@@ -50,7 +50,6 @@ Router.post('/register',function(req,res){
 
 })
 Router.post('/login',function(req,res){
-    console.log(req.body)
     const {user,pwd} = req.body
 
     User.findOne({user,pwd:md5Pwd(pwd)},_filter,function(err,doc){

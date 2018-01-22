@@ -7,7 +7,7 @@ import Boss from '../../component/boss/boss'
 import Genius from '../../component/genius/genius'
 import User from '../../component/user/user'
 function Msg(){
-	return <h2>消息列表页面</h2>
+	return (<div><h2>我的消息</h2></div>)
 }
 @connect(
 	state=>state
@@ -51,8 +51,9 @@ class Dashboard extends React.Component{
         return(
             <div>
                 <NavBar className='fixd-header' mode='dard'>
-                  {navList.find(v=>v.path === pathname).title}
+                  {navList.find(v=>v.path === pathname).title?navList.find(v=>v.path === pathname).title:null}
                 </NavBar>
+				<NavLinkBar data={navList}></NavLinkBar>
                 <div style={{marginTop:45}}>
                     <Switch>
                         {navList.map(v=>(
@@ -60,7 +61,7 @@ class Dashboard extends React.Component{
                         ))}
                     </Switch>
                 </div>
-                <NavLinkBar data={navList}></NavLinkBar>
+               
             </div>
         )
     }
