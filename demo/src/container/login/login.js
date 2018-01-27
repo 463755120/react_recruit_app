@@ -4,32 +4,25 @@ import {List,InputItem,WingBlank,WhiteSpace,Button} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {login} from '../../redux/user.redux'
+import Form from '../../component/form/form'
 const log = console.log.bind(console)
 @connect(
     state=>state.user,
     {login}
 )
+@Form
 class Login extends React.Component{
     constructor(props){
         super(props)
-        this.state={
-            user:'',
-            pwd:''
-        }
         this.handleLogin = this.handleLogin.bind(this)
         this.register = this.register.bind(this)
     }
-    handleChange(key,val){
-        this.setState({
-            [key]:val
-       })
-   }
    handleLogin(){
-       this.props.login(this.state)
+       this.props.login(this.props.state)
    }
    register(){
-    this.props.history.push('/register')
-   }
+		this.props.history.push('/register')
+	}
     render(){
         return <div>
                 {this.props.redirectTo? <Redirect to={this.props.redirectTo} />:null}
@@ -38,11 +31,11 @@ class Login extends React.Component{
                 <WingBlank>
                     <List>
                         <InputItem
-                            onChange={v=>{this.handleChange('user',v)}}
+                            onChange={v=>{this.props.handleChange('user',v)}}
                         > 用户</InputItem>
                         <WhiteSpace/>
                         <InputItem
-                            onChange={v=>{this.handleChange('pwd',v)}}
+                            onChange={v=>{this.props.handleChange('pwd',v)}}
                             type="password"
                         > 密码</InputItem>
                     </List>

@@ -27,11 +27,7 @@ class User extends React.Component{
     render(){
         const props = this.props
         const Item = List.Item
-        const Brief = Item.Brief
-        if(!props.user){
-            return <div></div>
-        }
-        
+        const Brief = Item.Brief       
         return props.user?(
 			<div>
 				<Result
