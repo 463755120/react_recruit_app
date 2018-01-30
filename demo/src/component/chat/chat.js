@@ -14,8 +14,10 @@ class Chat extends React.Component{
         this.state = {text:'',msg:[]}
     }
     componentDidMount() {
-        this.props.getMsgList()
-        this.props.recvMsg()
+        if(!this.props.chat.chatmsg.length){
+            this.props.getMsgList()
+            this.props.recvMsg()
+        }
     }
     handleSubmit(){
         const from  = this.props.user._id
@@ -28,12 +30,26 @@ class Chat extends React.Component{
     }
     render(){
         const userid = this.props.match.params.user           
-        console.log(this.props)
+        const Item  = List.Item
+        const users = this.props.chat.users
         return(
-            <div>
-                {this.props.chat.chatmsg.map(v=>{
-                    console.log(v.content)
-                    return <p key={v._id}>{v.content}</p>
+            <div id="chat-page">
+                <NavBar mode="dark">
+                    {userid}
+                </NavBar>
+                {this.props.chat.chatmsg.map(v=>{               
+                    return v.from === userid?(
+                        <List key={v._id}>
+                            <Item>
+                                {v.content}
+                            </Item>
+                        </List>
+                    ):(	<List key={v._id}>
+                        <Item
+                            extra={'avatar'}
+                             className='chat-me'
+                             >{v.content}</Item>
+                    </List>)
                 })}
                 <div className="stick-footer">
                     <List>
