@@ -10,7 +10,7 @@ const MSG_READ = 'MSG_READ'
 
 const initState = {
     chatmsg:[],
-    user:{},
+    users:{},
     unread:0
 }
 

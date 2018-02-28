@@ -32,21 +32,33 @@ class Chat extends React.Component{
         const userid = this.props.match.params.user           
         const Item  = List.Item
         const users = this.props.chat.users
+        if(!users[userid]){
+            return null
+        }
         return(
             <div id="chat-page">
-                <NavBar mode="dark">
-                    {userid}
+                <NavBar 
+                mode="dark"
+                icon={<Icon type="left"/>}
+                onLeftClick={()=>{
+                    this.props.history.goBack()
+                }}
+                >
+                    {users[userid].name}
                 </NavBar>
-                {this.props.chat.chatmsg.map(v=>{               
+                {this.props.chat.chatmsg.map(v=>{     
+                    const avatar = require(`../img/${users[v.from].avatar}.png`)       
                     return v.from === userid?(
                         <List key={v._id}>
-                            <Item>
+                            <Item
+                                thumb = {avatar}
+                            >
                                 {v.content}
                             </Item>
                         </List>
                     ):(	<List key={v._id}>
                         <Item
-                            extra={'avatar'}
+                            extra={<img src={avatar}/>}
                              className='chat-me'
                              >{v.content}</Item>
                     </List>)
